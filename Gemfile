@@ -62,3 +62,6 @@ gem "jwt"
 gem "jsonapi-serializers"
 
 gem "pundit"
+
+gem "stripe"
+gem 'stripe_event'

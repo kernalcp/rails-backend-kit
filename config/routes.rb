@@ -15,9 +15,12 @@ Rails.application.routes.draw do
 
   get 'health', to: 'api/v1/health#index'
 
+  post '/webhooks/stripe', to: 'webhooks/stripe#receive'
+
   namespace :api do
     namespace :v1 do
       resources :users, only: %i[index show]
+      resources :subscriptions, only: %i[create]
       post 'auth/login', to: 'auth#login'
       post 'auth/signup', to: 'auth#signup'
     end
