@@ -57,6 +57,8 @@ gem "bcrypt"
 
 gem "sidekiq"
 
+gem "jwt"
+
 gem "jsonapi-serializers"
 
 gem "pundit"
