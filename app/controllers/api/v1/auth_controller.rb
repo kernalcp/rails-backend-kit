@@ -18,6 +18,7 @@ module Api
         user.role ||= 'user'
 
         if user.save
+          ExampleJob.perform_later(user.id)
           token = JsonWebToken.encode(user_id: user.id)
           render json: success_response({ token: token, user: user_response(user) }), status: :created
         else
