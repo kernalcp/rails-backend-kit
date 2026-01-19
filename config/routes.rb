@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :users, only: %i[index show]
       post 'auth/login', to: 'auth#login'
       post 'auth/signup', to: 'auth#signup'
     end

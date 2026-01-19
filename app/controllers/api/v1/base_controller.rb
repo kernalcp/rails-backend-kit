@@ -4,6 +4,10 @@ module Api
       include Pundit
       before_action :authenticate_request!
 
+      rescue_from Pundit::NotAuthorizedError do
+        render json: { errors: 'You are not authorized to perform this action.' }, status: :forbidden
+      end
+
       private
 
       def authenticate_request!
