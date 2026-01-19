@@ -8,6 +8,9 @@ module Api
         render json: { errors: 'You are not authorized to perform this action.' }, status: :forbidden
       end
 
+      rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+      rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
+
       private
 
       def authenticate_request!
@@ -26,6 +29,21 @@ module Api
       def current_user
         @current_user
       end
-    end
+
+      def record_not_found
+        render json: error_response('Record not found' ), status: :not_found
+      end
+
+      def unprocessable_entity
+        render json: error_response('Record invalid' ), status: :unprocessable_entity
+      end
+
+      def error_response(message)
+        { success: false, errors: message }
+      end
+
+      def success_response(data = {}, message = 'Success')
+        { success: true, message: message, data: data }
+      end
   end
 end

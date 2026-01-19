@@ -7,7 +7,7 @@ module Api
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
           token = JsonWebToken.encode(user_id: user.id)
-          render json: { token: token, user: user_response(user) }, status: :ok
+          render json: success_response({ token: token, user: user_response(user) }), status: :ok
         else
           render json: { errors: 'Invalid email or password' }, status: :unauthorized
         end
@@ -19,9 +19,9 @@ module Api
 
         if user.save
           token = JsonWebToken.encode(user_id: user.id)
-          render json: { token: token, user: user_response(user) }, status: :created
+          render json: success_response({ token: token, user: user_response(user) }), status: :created
         else
-          render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+          render json: error_response(user.errors.full_messages), status: :unprocessable_entity
         end
       end
 
