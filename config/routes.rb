@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -8,8 +10,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  require 'sidekiq/web'
-  authenticate :user, lambda { |u| u.admin? } do
+  constraints AdminConstraint.new do
     mount Sidekiq::Web => '/sidekiq'
   end
 

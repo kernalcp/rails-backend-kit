@@ -23,3 +23,10 @@ bundle install
 rails db:create db:migrate db:seed
 rails s
 ```
+
+## API Example
+```
+POST /api/v1/auth/login
+Authorization: Bearer <token>
+```
+
